@@ -1,0 +1,20 @@
+with cte1 as (select city, length(city) as ctlngth, dense_rank() 
+              over (
+                order by length(city) asc) as ranks1
+from station)
+(select city, length(city)
+from cte1
+where ranks1= (
+        select min(ranks1)
+        from cte1)
+ order by city asc
+        limit 1)
+union
+    (select city, length(city)
+    from cte1
+    where ranks1= (
+        select max(ranks1)
+    from cte1)
+     order by city asc
+    limit 1)
+;
