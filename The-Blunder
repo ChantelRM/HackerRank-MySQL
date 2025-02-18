@@ -1,0 +1,7 @@
+with miscal as (
+    select salary, convert(
+            replace(
+                cast(salary as char),"0",""),UNSIGNED)as zeros
+    FROM employees)
+select ceil(avg(salary) - avg(zeros))
+from miscal;
